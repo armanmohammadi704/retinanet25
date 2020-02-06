@@ -73,7 +73,7 @@ def default_classification_model(
     # reshape output and apply sigmoid
     if keras.backend.image_data_format() == 'channels_first':
         outputs = keras.layers.Permute((2, 3, 1), name='pyramid_classification_permute')(outputs)
-    outputs = keras.layers.Reshape((-1, ,25,num_classes), name='pyramid_classification_reshape')(outputs)
+    outputs = keras.layers.Reshape((-1,25,num_classes), name='pyramid_classification_reshape')(outputs)
     outputs = keras.layers.Activation('sigmoid', name='pyramid_classification_sigmoid')(outputs)
 
     return keras.models.Model(inputs=inputs, outputs=outputs, name=name)
@@ -119,7 +119,7 @@ def default_regression_model(num_values, num_anchors, pyramid_feature_size=256, 
     outputs = keras.layers.Conv3D(num_anchors * num_values, name='pyramid_regression', **options)(outputs)
     if keras.backend.image_data_format() == 'channels_first':
         outputs = keras.layers.Permute((2, 3, 1), name='pyramid_regression_permute')(outputs)
-    outputs = keras.layers.Reshape((-1, ,25,num_values), name='pyramid_regression_reshape')(outputs)
+    outputs = keras.layers.Reshape((-1,25,num_values), name='pyramid_regression_reshape')(outputs)
 
     return keras.models.Model(inputs=inputs, outputs=outputs, name=name)
 
